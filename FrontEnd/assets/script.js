@@ -68,3 +68,13 @@ boutonHotel.addEventListener("click", function () {
   document.querySelector(".gallery").innerHTML = "";
   genererWorks(worksFiltered);
 });
+
+// Couleur active sur les boutons
+const boutons = document.querySelectorAll(".btn-filter");
+
+for (const bouton of boutons) {
+  bouton.addEventListener("click", function () {
+    boutons.forEach((bouton) => bouton.classList.remove("btn-actif"));
+    this.classList.add("btn-actif");
+  });
+}

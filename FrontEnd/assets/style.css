@@ -174,9 +174,19 @@ nav li {
   font-size: 1.2em;
 }
 
+nav a {
+  color: #000000;
+  text-decoration: none;
+}
+
 li:hover {
   color: #b1663c;
 }
+
+nav a:hover {
+  color: #b1663c;
+}
+
 #introduction {
   display: flex;
   align-items: center;
@@ -213,7 +223,7 @@ li:hover {
 
 .filters button {
   border-radius: 20px;
-  padding: 0.5em;
+  padding: 0.5em 1.3em;
   margin: 0.5em;
   font-family: "Syne";
   font-size: 16px;
@@ -225,6 +235,12 @@ li:hover {
   background-color: #1d6154;
   color: #ffffff;
 }
+
+.filters .btn-actif {
+  background-color: #1d6154;
+  color: #ffffff;
+}
+
 .gallery {
   width: 100%;
   display: grid;
@@ -236,33 +252,40 @@ li:hover {
 .gallery img {
   width: 100%;
 }
-#contact {
+#contact,
+#login {
   width: 50%;
   margin: auto;
 }
-#contact > * {
+#contact,
+#login > * {
   text-align: center;
 }
-#contact h2 {
+#contact h2,
+#login h2 {
   margin-bottom: 20px;
 }
-#contact form {
+#contact form,
+#login form {
   text-align: left;
   margin-top: 30px;
   display: flex;
   flex-direction: column;
 }
 
-#contact input {
+#contact input,
+#login input {
   height: 50px;
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+#contact label,
+#login label {
   margin: 2em 0 1em 0;
 }
-#contact textarea {
+#contact textarea,
+#login textarea {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -276,6 +299,10 @@ input[type="submit"] {
   width: 180px;
   text-align: center;
   border-radius: 60px;
+}
+
+#login a {
+  color: #000000;
 }
 
 footer nav ul {
