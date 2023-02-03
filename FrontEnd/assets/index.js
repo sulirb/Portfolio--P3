@@ -1,72 +1,74 @@
-const response = await fetch("http://localhost:5678/api/works");
-const data = await response.json();
+//Appel de l'api
+async function fetchWorks() {
+  const response = await fetch("http://localhost:5678/api/works");
+  const data = await response.json();
+  return data;
+}
 
-function genererWorks(data) {
-  const sectionGallery = document.querySelector(".gallery");
+const sectionGallery = document.querySelector(".gallery");
 
-  for (let i = 0; i < data.length; i++) {
-    const article = data[i];
+function createWorks(data) {
+  for (const article of data) {
     // Création d’une balise dédiée à un élément de la gallery
-    const worksElement = document.createElement("article");
+    const worksElement = sectionGallery.appendChild(
+      document.createElement("article")
+    );
+
     // Création des balises
-    const imageElement = document.createElement("img");
+    const imageElement = worksElement.appendChild(
+      document.createElement("img")
+    );
     imageElement.src = article.imageUrl;
     // Affichage des images
     imageElement.setAttribute("crossorigin", "anonymous");
-    const titleElement = document.createElement("p");
-    titleElement.innerText = article.title;
 
-    // On rattache la balise article a la section gallery
-    worksElement.appendChild(imageElement);
-    worksElement.appendChild(titleElement);
-    sectionGallery.appendChild(worksElement);
+    const titleElement = worksElement.appendChild(document.createElement("p"));
+    titleElement.innerText = article.title;
   }
 }
 
-genererWorks(data);
+let data;
+async function main() {
+  data = await fetchWorks();
+  createWorks(data);
+}
+
+main();
 
 // Reinitialisation
-const boutonTous = document.querySelector(".btn-tous");
-
-boutonTous.addEventListener("click", function () {
+document.querySelector(".btn-tous").addEventListener("click", function () {
   const worksFiltered = data.filter(function (work) {
     return work.categoryId === 1, 2, 3;
   });
   document.querySelector(".gallery").innerHTML = "";
-  genererWorks(worksFiltered);
+  createWorks(worksFiltered);
 });
 
 // Installation filtre 1
-const boutonObjet = document.querySelector(".btn-objet");
-
-boutonObjet.addEventListener("click", function () {
+document.querySelector(".btn-objet").addEventListener("click", function () {
   const worksFiltered = data.filter(function (work) {
     return work.categoryId === 1;
   });
   document.querySelector(".gallery").innerHTML = "";
-  genererWorks(worksFiltered);
+  createWorks(worksFiltered);
 });
 
 // Installation filtre 2
-const boutonAppart = document.querySelector(".btn-appart");
-
-boutonAppart.addEventListener("click", function () {
+document.querySelector(".btn-appart").addEventListener("click", function () {
   const worksFiltered = data.filter(function (work) {
     return work.categoryId === 2;
   });
   document.querySelector(".gallery").innerHTML = "";
-  genererWorks(worksFiltered);
+  createWorks(worksFiltered);
 });
 
 // Installation filtre 3
-const boutonHotel = document.querySelector(".btn-hotel");
-
-boutonHotel.addEventListener("click", function () {
+document.querySelector(".btn-hotel").addEventListener("click", function () {
   const worksFiltered = data.filter(function (work) {
     return work.categoryId === 3;
   });
   document.querySelector(".gallery").innerHTML = "";
-  genererWorks(worksFiltered);
+  createWorks(worksFiltered);
 });
 
 // Couleur active sur les boutons
