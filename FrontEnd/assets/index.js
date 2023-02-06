@@ -1,4 +1,4 @@
-//Appel de l'api
+//Appel de l'API
 async function fetchWorks() {
   const response = await fetch("http://localhost:5678/api/works");
   const data = await response.json();
@@ -7,19 +7,17 @@ async function fetchWorks() {
 
 const sectionGallery = document.querySelector(".gallery");
 
+//Création des éléments dans la galerie
 function createWorks(data) {
   for (const article of data) {
-    // Création d’une balise dédiée à un élément de la gallery
     const worksElement = sectionGallery.appendChild(
       document.createElement("article")
     );
 
-    // Création des balises
     const imageElement = worksElement.appendChild(
       document.createElement("img")
     );
     imageElement.src = article.imageUrl;
-    // Affichage des images
     imageElement.setAttribute("crossorigin", "anonymous");
 
     const titleElement = worksElement.appendChild(document.createElement("p"));
@@ -27,56 +25,109 @@ function createWorks(data) {
   }
 }
 
+//Obtention des catégories de filtres à partir des données
+export const getFilterCategories = (works) => {
+  const categories = new Set();
+  for (const work of works) {
+    const category = work.category;
+    categories.add(category.name);
+  }
+  return categories;
+};
+
 let data;
+
+/*async function main() {
+  data = await fetchWorks();
+  createWorks(data);
+
+  //Ajout des filtres sur le JS
+  const filters = document.querySelector(".filters");
+  const categories = getFilterCategories(data);
+
+  for (const category of categories) {
+    const filterButton = document.createElement("button");
+    filterButton.innerText = category;
+    filterButton.classList.add("btn-filter");
+    filterButton.dataset.category = category;
+    filters.appendChild(filterButton);
+  }
+
+  //Ecouteur d'événement pour les filtres
+  filters.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-filter")) {
+      const category = event.target.dataset.category;
+      const filteredWorks = data.filter(function (work) {
+        return work.category.name === category;
+      });
+      sectionGallery.innerHTML = "";
+      createWorks(filteredWorks);
+    }
+  });
+
+  //Bouton qui s'active au clique sur le filtre
+  for (const filter of filters) {
+    filter.addEventListener("click", function () {
+      filters.forEach((filter) => filter.classList.remove("btn-actif"));
+      this.classList.add("btn-actif");
+    });
+  }
+}
+
+main();*/
+
 async function main() {
   data = await fetchWorks();
   createWorks(data);
+
+  // Récuperation des catégories présentes dans l'api
+  const filters = document.querySelector(".filters");
+  const categoriesSet = new Set();
+  for (const work of data) {
+    categoriesSet.add(work.category.name);
+  }
+  const categories = Array.from(categoriesSet);
+
+  // Ajout des filtres sur le JS
+  for (const category of categories) {
+    const filterButton = document.createElement("button");
+    filterButton.innerText = category;
+    filterButton.classList.add("btn-filter");
+    filterButton.dataset.category = category;
+    filters.appendChild(filterButton);
+  }
+
+  // Ecouteur d'événement pour les filtres
+  filters.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-filter")) {
+      const category = event.target.dataset.category;
+      const filteredWorks = data.filter(function (work) {
+        return work.category.name === category;
+      });
+      sectionGallery.innerHTML = "";
+      createWorks(filteredWorks);
+    }
+  });
+
+  // Bouton qui s'active au clique sur le filtre
+  const filterButtons = filters.querySelectorAll(".btn-filter");
+  for (const filter of filterButtons) {
+    filter.addEventListener("click", function () {
+      filterButtons.forEach((filter) => filter.classList.remove("btn-actif"));
+      this.classList.add("btn-actif");
+    });
+  }
 }
 
 main();
 
 // Reinitialisation
-document.querySelector(".btn-tous").addEventListener("click", function () {
-  const worksFiltered = data.filter(function (work) {
-    return work.categoryId === 1, 2, 3;
+/* document.querySelector(".btn-tous").addEventListener("click", function () {
+  const allWorks = data.filter(function (work) {
+    return (
+      work.category.name === "objets", "appartements", "hotels & restaurants"
+    );
   });
   document.querySelector(".gallery").innerHTML = "";
-  createWorks(worksFiltered);
-});
-
-// Installation filtre 1
-document.querySelector(".btn-objet").addEventListener("click", function () {
-  const worksFiltered = data.filter(function (work) {
-    return work.categoryId === 1;
-  });
-  document.querySelector(".gallery").innerHTML = "";
-  createWorks(worksFiltered);
-});
-
-// Installation filtre 2
-document.querySelector(".btn-appart").addEventListener("click", function () {
-  const worksFiltered = data.filter(function (work) {
-    return work.categoryId === 2;
-  });
-  document.querySelector(".gallery").innerHTML = "";
-  createWorks(worksFiltered);
-});
-
-// Installation filtre 3
-document.querySelector(".btn-hotel").addEventListener("click", function () {
-  const worksFiltered = data.filter(function (work) {
-    return work.categoryId === 3;
-  });
-  document.querySelector(".gallery").innerHTML = "";
-  createWorks(worksFiltered);
-});
-
-// Couleur active sur les boutons
-const boutons = document.querySelectorAll(".btn-filter");
-
-for (const bouton of boutons) {
-  bouton.addEventListener("click", function () {
-    boutons.forEach((bouton) => bouton.classList.remove("btn-actif"));
-    this.classList.add("btn-actif");
-  });
-}
+  createWorks(allWorks);
+});*/
