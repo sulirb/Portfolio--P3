@@ -92,7 +92,7 @@ async function main() {
 main();
 
 // Reinitialisation
-document.querySelector(".btn-tous").addEventListener("click", function () {
+document.querySelector(".btn-tous").addEventListener("click", function (event) {
   const allWorks = data.filter(function (work) {
     return (
       work.category.name === "objets", "appartements", "hotels & restaurants"

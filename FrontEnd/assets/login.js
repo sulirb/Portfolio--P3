@@ -3,9 +3,10 @@ const formLogin = document.querySelector(".login-form");
 formLogin.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  const email = formLogin.elements.email.value;
-  const password = formLogin.elements.password.value;
-  const user = { email, password };
+  const user = {
+    email: this.email.value,
+    password: this.password.value,
+  };
 
   const response = await fetch("http://localhost:5678/api/users/login", {
     method: "POST",
@@ -14,5 +15,14 @@ formLogin.addEventListener("submit", async function (event) {
   });
 
   const data = await response.json();
-  console.log(data);
+
+  if (data.userId === 1) {
+    window.location = "index.html";
+    localStorage.setItem("connecté", data.token);
+  } else {
+    const errorMessage = document.createElement("p");
+    errorMessage.innerText = "Combinaison e-mail / mot de passe invalide.";
+
+    login.appendChild(errorMessage);
+  }
 });

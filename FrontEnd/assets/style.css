@@ -301,7 +301,16 @@ input[type="submit"] {
   border-radius: 60px;
 }
 
-#login a {
+#login p {
+  font-weight: 700;
+}
+
+.mdp-oubli {
+  margin-top: 2em;
+  text-align: center;
+}
+
+.mdp-oubli a {
   color: #000000;
 }
 
