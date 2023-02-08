@@ -18,7 +18,7 @@ formLogin.addEventListener("submit", async function (event) {
 
   if (data.userId === 1) {
     window.location = "index.html";
-    localStorage.setItem("connecté", data.token);
+    localStorage.setItem("logged", data.token);
   } else {
     const errorMessage = document.createElement("p");
     errorMessage.innerText = "Combinaison e-mail / mot de passe invalide.";

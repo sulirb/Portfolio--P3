@@ -102,3 +102,28 @@ document.querySelector(".btn-tous").addEventListener("click", function (event) {
   document.querySelector(".gallery").innerHTML = "";
   createWorks(allWorks);
 });
+
+// Changement d'état de la page si l'utilisateur est connecté
+
+const btnLog = document.querySelector(".btn-log a");
+
+const checkLoginStatus = function () {
+  const isLogged = localStorage.getItem("logged");
+
+  if (isLogged) {
+    btnLog.textContent = "logout";
+    btnLog.href = "index.html";
+    btnLog.addEventListener("click", logout);
+  } else {
+    btnLog.textContent = "login";
+    btnLog.href = "login.html";
+    btnLog.removeEventListener("click", logout);
+  }
+};
+
+const logout = function () {
+  localStorage.removeItem("logged");
+  checkLoginStatus();
+};
+
+checkLoginStatus();
