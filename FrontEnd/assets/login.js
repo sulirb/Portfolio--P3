@@ -21,7 +21,7 @@ formLogin.addEventListener("submit", async function (event) {
     localStorage.setItem("logged", data.token);
   } else {
     const errorMessage = document.createElement("p");
-    errorMessage.innerText = "Combinaison e-mail / mot de passe invalide.";
+    errorMessage.innerText = "Erreur dans l’identifiant ou le mot de passe";
 
     login.appendChild(errorMessage);
   }

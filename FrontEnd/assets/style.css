@@ -134,11 +134,7 @@ body {
   font-family: "Work Sans";
   font-size: 14px;
 }
-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 50px 0;
-}
+
 section {
   margin: 50px 0;
 }
@@ -187,6 +183,36 @@ nav a:hover {
   color: #b1663c;
 }
 
+.edition {
+  max-width: none;
+  width: 100%;
+  background-color: black;
+}
+
+.edition article {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.edition p {
+  color: white;
+}
+
+.edition button {
+  border-radius: 20px;
+  padding: 0.5em 1.3em;
+  margin: 0.5em;
+  font-size: 12px;
+  border: 1px solid #1d6154;
+}
+
+.title-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+
 #introduction {
   display: flex;
   align-items: center;
@@ -210,6 +236,12 @@ nav a:hover {
 #introduction p {
   margin-bottom: 0.5em;
 }
+
+.modif button {
+  border: none;
+  background-color: transparent;
+}
+
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;

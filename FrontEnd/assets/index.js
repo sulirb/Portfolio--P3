@@ -105,25 +105,57 @@ document.querySelector(".btn-tous").addEventListener("click", function (event) {
 
 // Changement d'état de la page si l'utilisateur est connecté
 
+// Boutons login et logout dans le menu
 const btnLog = document.querySelector(".btn-log a");
 
-const checkLoginStatus = function () {
-  const isLogged = localStorage.getItem("logged");
+// Rajout bande noire header et boutons mode edition
+const htmlEdition = document.querySelector(".edition");
 
-  if (isLogged) {
-    btnLog.textContent = "logout";
-    btnLog.href = "index.html";
-    btnLog.addEventListener("click", logout);
-  } else {
-    btnLog.textContent = "login";
-    btnLog.href = "login.html";
-    btnLog.removeEventListener("click", logout);
-  }
-};
+const editionMode = htmlEdition.appendChild(document.createElement("article"));
+const editionBtn = editionMode.appendChild(document.createElement("p"));
+const publishBtn = editionMode.appendChild(document.createElement("button"));
 
-const logout = function () {
-  localStorage.removeItem("logged");
+// Rajout boutons modifier
+const modifEditions = document.querySelectorAll(".modif");
+
+modifEditions.forEach(function (modifEdition) {
+  const modifierMode = modifEdition.appendChild(
+    document.createElement("article")
+  );
+  const modifierBtn = modifierMode.appendChild(
+    document.createElement("button")
+  );
+
+  // Check connexion
+  const logout = function () {
+    localStorage.removeItem("logged");
+    checkLoginStatus();
+  };
+
+  //Application des éléments selon statut de connexion
+  const checkLoginStatus = function () {
+    const isLogged = localStorage.getItem("logged");
+
+    if (isLogged) {
+      btnLog.textContent = "logout";
+      btnLog.href = "index.html";
+      btnLog.addEventListener("click", logout);
+
+      editionBtn.innerHTML =
+        '<i class="fa fa-pen-to-square fa-light"></i> Mode édition';
+      publishBtn.textContent = "publier les changements";
+
+      modifierBtn.innerHTML =
+        '<i class="fa fa-pen-to-square fa-light"></i> modifier';
+    } else {
+      btnLog.textContent = "login";
+      btnLog.href = "login.html";
+      btnLog.removeEventListener("click", logout);
+
+      editionMode.innerHTML = "";
+      modifierMode.innerHTML = "";
+    }
+  };
+
   checkLoginStatus();
-};
-
-checkLoginStatus();
+});
