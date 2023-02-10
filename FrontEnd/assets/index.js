@@ -1,3 +1,5 @@
+import { check, logout } from "./auth.js";
+
 //Appel de l'API
 async function fetchWorks() {
   const response = await fetch("http://localhost:5678/api/works");
@@ -127,19 +129,19 @@ modifEditions.forEach(function (modifEdition) {
   );
 
   // Check connexion
-  const logout = function () {
-    localStorage.removeItem("logged");
-    checkLoginStatus();
-  };
 
   //Application des éléments selon statut de connexion
-  const checkLoginStatus = function () {
-    const isLogged = localStorage.getItem("logged");
+  function checkLoginStatus() {
+    const isLogged = check();
 
     if (isLogged) {
       btnLog.textContent = "logout";
       btnLog.href = "index.html";
       btnLog.addEventListener("click", logout);
+
+      let body = document.querySelector("body");
+      body.classList.add("is-admin");
+      body.classList.remove("is-guest");
 
       editionBtn.innerHTML =
         '<i class="fa fa-pen-to-square fa-light"></i> Mode édition';
@@ -148,14 +150,10 @@ modifEditions.forEach(function (modifEdition) {
       modifierBtn.innerHTML =
         '<i class="fa fa-pen-to-square fa-light"></i> modifier';
     } else {
-      btnLog.textContent = "login";
-      btnLog.href = "login.html";
-      btnLog.removeEventListener("click", logout);
-
       editionMode.innerHTML = "";
       modifierMode.innerHTML = "";
     }
-  };
+  }
 
   checkLoginStatus();
 });

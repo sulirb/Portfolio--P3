@@ -1,3 +1,5 @@
+import { login } from "./auth.js";
+
 const formLogin = document.querySelector(".login-form");
 
 formLogin.addEventListener("submit", async function (event) {
@@ -17,8 +19,7 @@ formLogin.addEventListener("submit", async function (event) {
   const data = await response.json();
 
   if (data.userId === 1) {
-    window.location = "index.html";
-    localStorage.setItem("logged", data.token);
+    login(data.token);
   } else {
     const errorMessage = document.createElement("p");
     errorMessage.innerText = "Erreur dans l’identifiant ou le mot de passe";

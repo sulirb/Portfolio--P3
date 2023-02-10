@@ -184,8 +184,10 @@ nav a:hover {
 }
 
 .edition {
-  max-width: none;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: black;
 }
 
@@ -242,9 +244,21 @@ nav a:hover {
   background-color: transparent;
 }
 
+figure {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
+}
+
+.projet-modif {
+  display: flex;
+  justify-content: center;
 }
 
 .filters {
@@ -350,4 +364,12 @@ footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
+}
+
+.is-guest .only-admin {
+  display: none;
+}
+
+.is-admin .only-guest {
+  display: none;
 }
