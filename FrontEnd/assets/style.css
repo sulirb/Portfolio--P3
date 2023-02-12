@@ -359,6 +359,9 @@ input[type="submit"] {
   color: #000000;
 }
 
+.error {
+  text-align: center;
+}
 footer nav ul {
   display: flex;
   justify-content: flex-end;

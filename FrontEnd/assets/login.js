@@ -18,12 +18,17 @@ formLogin.addEventListener("submit", async function (event) {
 
   const data = await response.json();
 
+  const errorMessage = formLogin.querySelector("p.error");
+  if (errorMessage) {
+    errorMessage.remove();
+  }
+
   if (data.userId === 1) {
     login(data.token);
   } else {
-    const errorMessage = document.createElement("p");
-    errorMessage.innerText = "Erreur dans l’identifiant ou le mot de passe";
-
-    login.appendChild(errorMessage);
+    const newErrorMessage = formLogin.appendChild(document.createElement("p"));
+    newErrorMessage.classList.add("error");
+    newErrorMessage.innerText = "Erreur dans l’identifiant ou le mot de passe";
+    formLogin.appendChild(newErrorMessage);
   }
 });

@@ -1,4 +1,4 @@
-import { check, logout } from "./auth.js";
+import { check, logout as logoutFromAuth } from "./auth.js";
 
 //Appel de l'API
 async function fetchWorks() {
@@ -107,8 +107,8 @@ document.querySelector(".btn-tous").addEventListener("click", function (event) {
 
 // Changement d'état de la page si l'utilisateur est connecté
 
-// Boutons login et logout dans le menu
-const btnLog = document.querySelector(".btn-log a");
+// Bouton de connexion et de déconnexion dans le menu
+const btnLogout = document.querySelector(".only-admin a");
 
 //Application des éléments selon statut de connexion
 function checkLoginStatus() {
@@ -119,7 +119,13 @@ function checkLoginStatus() {
     body.classList.add("is-admin");
     body.classList.remove("is-guest");
   } else {
+    let body = document.querySelector("body");
+    body.classList.add("is-guest");
+    body.classList.remove("is-admin");
   }
 }
 
 checkLoginStatus();
+
+// Écouteur d'événement "click" pour le bouton de connexion
+btnLogout.addEventListener("click", logoutFromAuth);
