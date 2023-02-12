@@ -191,14 +191,11 @@ nav a:hover {
   background-color: black;
 }
 
-.edition article {
+.edition {
+  color: white;
   display: flex;
   align-items: baseline;
   justify-content: center;
-}
-
-.edition p {
-  color: white;
 }
 
 .edition button {
@@ -239,7 +236,7 @@ nav a:hover {
   margin-bottom: 0.5em;
 }
 
-.modif button {
+.modif {
   border: none;
   background-color: transparent;
 }
@@ -249,16 +246,18 @@ figure {
   flex-direction: column;
   flex-wrap: wrap;
   align-content: space-around;
+  align-items: flex-start;
 }
 
 #portfolio h2 {
   text-align: center;
-  margin-bottom: 1em;
+  margin: 1em;
 }
 
 .projet-modif {
   display: flex;
   justify-content: center;
+  align-items: baseline;
 }
 
 .filters {

@@ -110,50 +110,16 @@ document.querySelector(".btn-tous").addEventListener("click", function (event) {
 // Boutons login et logout dans le menu
 const btnLog = document.querySelector(".btn-log a");
 
-// Rajout bande noire header et boutons mode edition
-const htmlEdition = document.querySelector(".edition");
+//Application des éléments selon statut de connexion
+function checkLoginStatus() {
+  const isLogged = check();
 
-const editionMode = htmlEdition.appendChild(document.createElement("article"));
-const editionBtn = editionMode.appendChild(document.createElement("p"));
-const publishBtn = editionMode.appendChild(document.createElement("button"));
-
-// Rajout boutons modifier
-const modifEditions = document.querySelectorAll(".modif");
-
-modifEditions.forEach(function (modifEdition) {
-  const modifierMode = modifEdition.appendChild(
-    document.createElement("article")
-  );
-  const modifierBtn = modifierMode.appendChild(
-    document.createElement("button")
-  );
-
-  // Check connexion
-
-  //Application des éléments selon statut de connexion
-  function checkLoginStatus() {
-    const isLogged = check();
-
-    if (isLogged) {
-      btnLog.textContent = "logout";
-      btnLog.href = "index.html";
-      btnLog.addEventListener("click", logout);
-
-      let body = document.querySelector("body");
-      body.classList.add("is-admin");
-      body.classList.remove("is-guest");
-
-      editionBtn.innerHTML =
-        '<i class="fa fa-pen-to-square fa-light"></i> Mode édition';
-      publishBtn.textContent = "publier les changements";
-
-      modifierBtn.innerHTML =
-        '<i class="fa fa-pen-to-square fa-light"></i> modifier';
-    } else {
-      editionMode.innerHTML = "";
-      modifierMode.innerHTML = "";
-    }
+  if (isLogged) {
+    let body = document.querySelector("body");
+    body.classList.add("is-admin");
+    body.classList.remove("is-guest");
+  } else {
   }
+}
 
-  checkLoginStatus();
-});
+checkLoginStatus();

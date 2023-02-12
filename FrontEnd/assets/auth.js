@@ -1,13 +1,13 @@
 export function logout() {
+  localStorage.removeItem("token");
   window.location = "index.html";
-  localStorage.removeItem("logged");
 }
 
 export function check() {
-  return localStorage.getItem("logged");
+  return localStorage.getItem("token");
 }
 
 export function login(token) {
-  localStorage.setItem("logged", token);
+  localStorage.setItem("token", token);
   window.location = "index.html";
 }
