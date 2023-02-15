@@ -202,8 +202,8 @@ nav a:hover {
   border-radius: 20px;
   padding: 0.5em 1.3em;
   margin: 0.5em;
-  font-size: 12px;
   border: 1px solid #1d6154;
+  font-family: "Work Sans";
 }
 
 .title-nav {
@@ -239,6 +239,8 @@ nav a:hover {
 .modif {
   border: none;
   background-color: transparent;
+  font-family: "Work Sans";
+  font-size: 14px;
 }
 
 figure {
@@ -374,4 +376,16 @@ footer nav ul {
 
 .is-admin .only-guest {
   display: none;
+}
+
+#myDialog {
+  padding: 0;
+  border-radius: 20px;
+  border: transparent;
+}
+
+#myDiv {
+  width: 500px;
+  height: 600px;
+  padding: 1rem;
 }

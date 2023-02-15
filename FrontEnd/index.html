@@ -13,6 +13,7 @@
     <meta name="description" content="" />
 
     <script type="module" src="./assets/index.js"></script>
+    <script type="module" src="./assets/modale.js"></script>
     <script
       src="https://kit.fontawesome.com/84da0323c7.js"
       crossorigin="anonymous"
@@ -73,9 +74,18 @@
       <section id="portfolio">
         <div class="projet-modif">
           <h2>Mes Projets</h2>
-          <button class="modif only-admin">
+          <button id="myButton" class="modif only-admin">
             <i class="fa fa-pen-to-square fa-light"></i> modifier
           </button>
+          <dialog id="myDialog">
+            <div id="myDiv">
+              <button id="js-modal-close">
+                <i class="fa fa-sharp fa-solid fa-xmark"></i></button
+              >Galerie photo
+              <button>Ajouter une photo</button>
+              <p>Supprimer la galerie</p>
+            </div>
+          </dialog>
         </div>
         <div class="filters only-guest">
           <button class="btn-tous">Tous</button>
