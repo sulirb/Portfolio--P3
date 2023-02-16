@@ -27,6 +27,8 @@ function createWorks(data) {
   }
 }
 
+export { fetchWorks, createWorks }; // Exporter la fonction createWorks
+
 //Obtention des catégories de filtres à partir des données
 export const getFilterCategories = function (works) {
   const categories = new Set();

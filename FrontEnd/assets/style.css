@@ -378,14 +378,68 @@ footer nav ul {
   display: none;
 }
 
+/* MODALE */
+
 #myDialog {
-  padding: 0;
   border-radius: 20px;
   border: transparent;
+  width: 630px;
 }
 
 #myDiv {
-  width: 500px;
-  height: 600px;
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+#myDiv h2 {
+  font-family: "Work Sans";
+  font-weight: 400;
+  color: #000000;
+}
+
+#myDiv a {
+  font-family: "Syne";
+  color: #d65353;
+  text-decoration: none;
+  text-align: center;
+}
+
+#js-modal-close {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  text-align: end;
+}
+
+.modal-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 10%;
+}
+
+.modal-gallery img {
+  width: 100%;
+  height: 126px;
+}
+
+.modal-gallery button {
+  background-color: #000000;
+  position: fixed;
+  margin: -140px 0px 0px 60px;
+}
+
+.modal-gallery i {
+  color: #ffffff;
+}
+
+#add-photo {
+  border-radius: 20px;
+  padding: 0.5em 1.3em;
+  margin: 0.5em;
+  font-family: "Syne";
+  font-size: 16px;
+  background-color: #1d6154;
+  color: #ffffff;
+  border: 1px solid #1d6154;
 }
