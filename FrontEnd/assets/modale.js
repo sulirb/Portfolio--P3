@@ -1,4 +1,4 @@
-import { fetchWorks } from "./index.js";
+import { deleteWorks, fetchWorks } from "./api.js";
 
 // Création de la logique d'ouverture et fermeture de la modale
 
@@ -56,5 +56,13 @@ function createWorks(data) {
       document.createElement("button")
     );
     deleteButton.innerHTML = '<i class="fa fa-solid fa-trash-can"></i>';
+
+    deleteButton.addEventListener("click", function (e) {
+      console.log(e);
+    });
   }
 }
+
+// Supression des éléments sur la modale
+
+/*console.log(deleteWorks(3));*/

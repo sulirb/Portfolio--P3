@@ -1,11 +1,7 @@
+import { fetchWorks } from "./api.js";
 import { check, logout as logoutFromAuth } from "./auth.js";
 
 //Appel de l'API
-async function fetchWorks() {
-  const response = await fetch("http://localhost:5678/api/works");
-  const data = await response.json();
-  return data;
-}
 
 const sectionGallery = document.querySelector(".gallery");
 
@@ -26,8 +22,6 @@ function createWorks(data) {
     titleElement.innerText = article.title;
   }
 }
-
-export { fetchWorks, createWorks }; // Exporter la fonction createWorks
 
 //Obtention des catégories de filtres à partir des données
 export const getFilterCategories = function (works) {
@@ -121,7 +115,6 @@ function checkLoginStatus() {
     body.classList.add("is-admin");
     body.classList.remove("is-guest");
   } else {
-    let body = document.querySelector("body");
     body.classList.add("is-guest");
     body.classList.remove("is-admin");
   }
