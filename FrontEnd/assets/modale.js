@@ -1,4 +1,4 @@
-import { deleteWorks, fetchWorks } from "./api.js";
+import { fetchWorks, deleteWorks } from "./api.js";
 
 // Création de la logique d'ouverture et fermeture de la modale
 
@@ -39,6 +39,7 @@ const sectionGallery = document.querySelector(".modal-gallery");
 
 function createWorks(data) {
   for (const article of data) {
+    // Création des works
     const worksElement = sectionGallery.appendChild(
       document.createElement("article")
     );
@@ -52,17 +53,19 @@ function createWorks(data) {
     const titleElement = worksElement.appendChild(document.createElement("p"));
     titleElement.innerText = "éditer";
 
+    addDeleteButton(worksElement);
+  }
+
+  function addDeleteButton(worksElement) {
+    // Création du bouton de suppression sur les éléments
     const deleteButton = worksElement.appendChild(
       document.createElement("button")
     );
     deleteButton.innerHTML = '<i class="fa fa-solid fa-trash-can"></i>';
-
-    deleteButton.addEventListener("click", function (e) {
-      console.log(e);
+    // Supression des éléments sur la modale
+    deleteButton.addEventListener("click", async function (e) {
+      e.preventDefault();
+      deleteWorks(`${id}`);
     });
   }
 }
-
-// Supression des éléments sur la modale
-
-/*console.log(deleteWorks(3));*/
