@@ -397,13 +397,6 @@ footer nav ul {
   color: #000000;
 }
 
-#myDiv a {
-  font-family: "Syne";
-  color: #d65353;
-  text-decoration: none;
-  text-align: center;
-}
-
 #js-modal-close {
   background-color: transparent;
   border: none;
@@ -442,4 +435,13 @@ footer nav ul {
   background-color: #1d6154;
   color: #ffffff;
   border: 1px solid #1d6154;
+}
+
+#delete-all {
+  font-family: "Syne";
+  color: #d65353;
+  text-decoration: none;
+  text-align: center;
+  background: none;
+  border: none;
 }
