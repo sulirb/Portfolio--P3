@@ -135,6 +135,14 @@ body {
   font-size: 14px;
 }
 
+.is-guest .only-admin {
+  display: none;
+}
+
+.is-admin .only-guest {
+  display: none;
+}
+
 section {
   margin: 50px 0;
 }
@@ -313,7 +321,8 @@ figure {
   margin-bottom: 20px;
 }
 #contact form,
-#login form {
+#login form,
+#myDivTwo form {
   text-align: left;
   margin-top: 30px;
   display: flex;
@@ -321,7 +330,8 @@ figure {
 }
 
 #contact input,
-#login input {
+#login input,
+#myDivTwo input {
   height: 50px;
   font-size: 1.2em;
   border: none;
@@ -331,8 +341,10 @@ figure {
 #login label {
   margin: 2em 0 1em 0;
 }
+
 #contact textarea,
-#login textarea {
+#login textarea,
+#myDivTwo textarea {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -347,6 +359,8 @@ input[type="submit"] {
   text-align: center;
   border-radius: 60px;
 }
+
+/* LOGIN */
 
 #login p {
   font-weight: 700;
@@ -370,39 +384,36 @@ footer nav ul {
   margin: 2em;
 }
 
-.is-guest .only-admin {
-  display: none;
-}
-
-.is-admin .only-guest {
-  display: none;
-}
-
 /* MODALE */
 
-#myDialog {
+dialog {
   border-radius: 20px;
   border: transparent;
   width: 630px;
 }
 
-#myDiv {
+#myDiv,
+#myDivTwo {
   display: flex;
   flex-direction: column;
 }
 
-#myDiv h2 {
+#myDiv h2,
+#myDivTwo h2 {
   font-family: "Work Sans";
   font-weight: 400;
   color: #000000;
 }
 
-#js-modal-close {
+#js-modal-close,
+#js-modal-close-two {
   background-color: transparent;
   border: none;
   font-size: 18px;
   text-align: end;
 }
+
+/* PREMIERE MODALE */
 
 .modal-gallery {
   display: flex;
@@ -444,4 +455,27 @@ footer nav ul {
   text-align: center;
   background: none;
   border: none;
+}
+
+/* DEUXIEME MODALE */
+
+#back-to-one {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  text-align: start;
+}
+
+#myDivTwo form {
+  align-items: center;
+}
+
+#myDivTwo form .fa {
+  background-color: #e8f1f6;
+  color: #b9c5cc;
+  font-size: 50px;
+}
+
+input#photo {
+  background-color: #e8f1f6;
 }
