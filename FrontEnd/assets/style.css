@@ -459,11 +459,15 @@ dialog {
 
 /* DEUXIEME MODALE */
 
+.modale-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
 #back-to-one {
   background-color: transparent;
   border: none;
   font-size: 18px;
-  text-align: start;
 }
 
 #myDivTwo form {

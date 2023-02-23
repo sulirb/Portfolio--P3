@@ -62,7 +62,7 @@ function addDeleteButton(worksElement) {
     const id = worksElement.getAttribute("data-id");
     deleteWorks(id);
     worksElement.remove(); // supprime l'élément du DOM (supprime avant de refresh)
-    e.preventDefault();
+    e.stopPropagation();
   });
 }
 
@@ -76,7 +76,7 @@ function addDeleteAll() {
       const id = worksElements[i].getAttribute("data-id");
       await deleteWorks(id);
       worksElements[i].remove(); // supprime les éléments du DOM (supprime avant de refresh)
-      e.preventDefault();
+      e.stopPropagation();
     }
   });
 }
@@ -86,6 +86,7 @@ const addPhotoButton = document.getElementById("add-photo");
 const myDialogTwo = document.getElementById("myDialogTwo");
 const closeButtonTwo = document.getElementById("js-modal-close-two");
 
+// Bouton pour charger la 2ème page modale
 function changeModal() {
   myDialog.close();
   myDialogTwo.showModal();
@@ -106,21 +107,15 @@ closeButton.addEventListener("click", function () {
   closeModal(myDialog);
 });
 
-// Ferme la fenêtre modale lorsqu'on clique en dehors de la fenêtre
-body.addEventListener("click", function (event) {
-  if (event.target === myDialog) {
-    closeModal(myDialog);
-  }
-});
-
-// Ajoute les mêmes fonctionnalités pour la 2ème modale
+// Ajoute la même fonctionnalité pour la 2ème modale
 closeButtonTwo.addEventListener("click", function () {
   closeModal(myDialogTwo);
 });
 
+// Ferme les fenêtres modale lorsqu'on clique en dehors de la fenêtre
 body.addEventListener("click", function (event) {
-  if (event.target === myDialogTwo) {
-    closeModal(myDialogTwo);
+  if (event.target === myDialog || event.target === myDialogTwo) {
+    closeModal(event.target);
   }
 });
 
