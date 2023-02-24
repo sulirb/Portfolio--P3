@@ -101,26 +101,20 @@
                 </button>
               </div>
               <h2>Ajout photo</h2>
-              <form
-                method="post"
-                url="/upload-picture"
-                enctype="multipart/form-data"
-              >
-                <label for="image"><i class="fa fa-thin fa-image"></i></label>
-                <input
-                  type="file"
-                  name="photo"
-                  id="photo"
-                  accept="image/png, image/jpeg"
-                />
+              <form method="dialog" id="myForm">
+                <label for="image" id="image-label">
+                  <i class="fa fa-thin fa-image"></i>
+                  <input
+                    type="file"
+                    id="imgInp"
+                    accept="image/png, image/jpeg"
+                  />
+                  <img id="blah" src="#" alt="your image" />
+                </label>
                 <label for="title">Titre</label>
                 <input type="text" name="title" id="title" />
                 <label for="category">Catégorie</label>
-                <input
-                  list="category.id"
-                  id="category-choice"
-                  name="category-choice"
-                />
+                <input list="category.id" id="category" name="category" />
 
                 <datalist id="category.id">
                   <option value="1"></option>

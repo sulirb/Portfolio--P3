@@ -1,4 +1,4 @@
-import { fetchWorks, deleteWorks } from "./api.js";
+import { fetchWorks, deleteWorks, postWorks } from "./api.js";
 
 // Création de la logique d'ouverture de la modale
 
@@ -44,7 +44,7 @@ function createWorks(data) {
     worksElement.setAttribute("data-id", article.id);
 
     addDeleteButton(worksElement);
-    addDeleteAll(worksElement);
+    addDeleteAll();
   }
 }
 
@@ -132,3 +132,21 @@ backMyDialog.addEventListener("click", function (e) {
   e.preventDefault();
   changeModalTwo();
 });
+
+// Envoi d’un nouveau projet au back-end via le formulaire de la modale
+
+const myForm = document.getElementById("myForm");
+
+myForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData(myForm);
+  postWorks(formData);
+});
+
+// Prévisualisation de l'image
+imgInp.onchange = (evt) => {
+  const [file] = imgInp.files;
+  if (file) {
+    blah.src = URL.createObjectURL(file);
+  }
+};
