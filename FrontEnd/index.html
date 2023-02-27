@@ -85,8 +85,10 @@
               </button>
               <h2>Galerie photo</h2>
               <div class="modal-gallery"></div>
-              <button id="add-photo">Ajouter une photo</button>
-              <button id="delete-all">Supprimer la galerie</button>
+              <div class="buttons-gallery">
+                <button id="add-photo">Ajouter une photo</button>
+                <button id="delete-all">Supprimer la galerie</button>
+              </div>
             </div>
           </dialog>
           <!-- Modale 2 -->
@@ -107,19 +109,20 @@
                   <input
                     type="file"
                     id="imgInp"
+                    class="my-file-input"
                     accept="image/png, image/jpeg"
                   />
-                  <img id="blah" src="#" alt="your image" />
+                  <img id="blah" src="#" alt="+ Ajouter image" />
                 </label>
                 <label for="title">Titre</label>
                 <input type="text" name="title" id="title" />
                 <label for="category">Catégorie</label>
-                <input list="category.id" id="category" name="category" />
+                <input list="category-id" id="category" name="category" />
 
-                <datalist id="category.id">
-                  <option value="1"></option>
-                  <option value="2"></option>
-                  <option value="3"></option>
+                <datalist id="category-id">
+                  <option></option>
+                  <option></option>
+                  <option></option>
                 </datalist>
 
                 <input type="submit" value="Valider" />

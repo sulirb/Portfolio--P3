@@ -16,6 +16,23 @@ myButton.addEventListener("click", openModal);
 async function main() {
   const data = await fetchWorks();
   createWorks(data);
+
+  // Utilisation des catégories sur le formulaire
+
+  const categoriesSet = new Set();
+  for (const work of data) {
+    categoriesSet.add(work.category.name);
+  }
+
+  const categories = Array.from(categoriesSet);
+  console.log(categories);
+
+  const datalistElement = document.getElementById("category-id");
+  for (const category of categories) {
+    const optionElement = document.createElement("option");
+    optionElement.setAttribute("value", category);
+    datalistElement.appendChild(optionElement);
+  }
 }
 
 main();
@@ -50,11 +67,13 @@ function createWorks(data) {
 
 // Supprime un ID
 function addDeleteButton(worksElement) {
-  // Création du bouton de suppression sur les éléments
   const deleteButton = worksElement.appendChild(
     document.createElement("button")
   );
-  deleteButton.innerHTML = '<i class="fa fa-solid fa-trash-can"></i>';
+
+  const trashIcon = document.createElement("i");
+  trashIcon.classList.add("fas", "fa-trash-can");
+  deleteButton.appendChild(trashIcon);
 
   // Supression des éléments sur la modale
   deleteButton.addEventListener("click", async function (e) {
@@ -85,6 +104,7 @@ function addDeleteAll() {
 const addPhotoButton = document.getElementById("add-photo");
 const myDialogTwo = document.getElementById("myDialogTwo");
 const closeButtonTwo = document.getElementById("js-modal-close-two");
+const backMyDialog = document.getElementById("back-to-one");
 
 // Bouton pour charger la 2ème page modale
 function changeModal() {
@@ -95,6 +115,17 @@ function changeModal() {
 addPhotoButton.addEventListener("click", function (e) {
   e.preventDefault();
   changeModal();
+});
+
+// Revient à la 1ère modale
+function changeModalTwo() {
+  myDialogTwo.close();
+  myDialog.showModal();
+}
+
+backMyDialog.addEventListener("click", function (e) {
+  e.preventDefault();
+  changeModalTwo();
 });
 
 // Fonction générale pour fermer la modale
@@ -119,20 +150,6 @@ body.addEventListener("click", function (event) {
   }
 });
 
-// Revient à la 1ère modale
-
-const backMyDialog = document.getElementById("back-to-one");
-
-function changeModalTwo() {
-  myDialogTwo.close();
-  myDialog.showModal();
-}
-
-backMyDialog.addEventListener("click", function (e) {
-  e.preventDefault();
-  changeModalTwo();
-});
-
 // Envoi d’un nouveau projet au back-end via le formulaire de la modale
 
 const myForm = document.getElementById("myForm");
@@ -141,6 +158,8 @@ myForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const formData = new FormData(myForm);
   postWorks(formData);
+  console.log(e);
+  console.log(formData);
 });
 
 // Prévisualisation de l'image
@@ -148,5 +167,7 @@ imgInp.onchange = (evt) => {
   const [file] = imgInp.files;
   if (file) {
     blah.src = URL.createObjectURL(file);
+    const photoIcon = document.querySelector(".fa-image");
+    photoIcon.style.display = "none";
   }
 };
