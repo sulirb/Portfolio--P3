@@ -78,27 +78,27 @@
             <i class="fa fa-pen-to-square fa-light"></i> modifier
           </button>
           <!-- Modale 1 -->
-          <dialog id="myDialog">
-            <div id="myDiv">
-              <button id="js-modal-close">
+          <dialog id="galleryDialog">
+            <div id="galleryDiv">
+              <button id="galleryCloseButton">
                 <i class="fa fa-sharp fa-solid fa-xmark"></i>
               </button>
               <h2>Galerie photo</h2>
               <div class="modal-gallery"></div>
-              <div class="buttons-gallery">
+              <div class="galleryFlexButtons">
                 <button id="add-photo">Ajouter une photo</button>
                 <button id="delete-all">Supprimer la galerie</button>
               </div>
             </div>
           </dialog>
           <!-- Modale 2 -->
-          <dialog id="myDialogTwo">
-            <div id="myDivTwo">
-              <div class="modale-buttons">
-                <button id="back-to-one">
+          <dialog id="submitDialog">
+            <div id="submitDiv">
+              <div class="submitFlexButtons">
+                <button id="btn-modal-previous">
                   <i class="fa-solid fa-arrow-left-long"></i>
                 </button>
-                <button id="js-modal-close-two">
+                <button id="submitCloseButton">
                   <i class="fa-sharp fa-solid fa-xmark"></i>
                 </button>
               </div>
@@ -108,6 +108,7 @@
                   <i class="fa fa-thin fa-image"></i>
                   <input
                     type="file"
+                    name="file"
                     id="imgInp"
                     class="my-file-input"
                     accept="image/png, image/jpeg"
@@ -117,13 +118,9 @@
                 <label for="title">Titre</label>
                 <input type="text" name="title" id="title" />
                 <label for="category">Catégorie</label>
-                <input list="category-id" id="category" name="category" />
+                <input list="category-id" name="category" id="category" />
 
-                <datalist id="category-id">
-                  <option></option>
-                  <option></option>
-                  <option></option>
-                </datalist>
+                <datalist id="category-id"> </datalist>
 
                 <input type="submit" value="Valider" />
               </form>

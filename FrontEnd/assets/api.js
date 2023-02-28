@@ -19,4 +19,5 @@ async function apiFetch(method, url, body, options = {}) {
 
 export const fetchWorks = () => apiFetch("GET", "/api/works");
 export const deleteWorks = (id) => apiFetch("DELETE", `/api/works/${id}`);
-export const postWorks = (formData) => apiFetch("POST", `/api/works`, formData);
+export const postWorks = (formData) =>
+  apiFetch("POST", "/api/works", { body: formData });

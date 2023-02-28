@@ -2,14 +2,14 @@ import { fetchWorks, deleteWorks, postWorks } from "./api.js";
 
 // Création de la logique d'ouverture de la modale
 
-const myDialog = document.getElementById("myDialog");
+const galleryDialog = document.getElementById("galleryDialog");
 const myButton = document.getElementById("myButton");
-const closeButton = document.getElementById("js-modal-close");
+const galleryCloseButton = document.getElementById("galleryCloseButton");
 const body = document.body;
 
 // Ouvre la fenêtre modale lorsqu'on clique sur le bouton
 function openModal() {
-  return myDialog.showModal();
+  return galleryDialog.showModal();
 }
 myButton.addEventListener("click", openModal);
 
@@ -25,7 +25,6 @@ async function main() {
   }
 
   const categories = Array.from(categoriesSet);
-  console.log(categories);
 
   const datalistElement = document.getElementById("category-id");
   for (const category of categories) {
@@ -102,14 +101,14 @@ function addDeleteAll() {
 
 // Création de la 2ème page modale
 const addPhotoButton = document.getElementById("add-photo");
-const myDialogTwo = document.getElementById("myDialogTwo");
-const closeButtonTwo = document.getElementById("js-modal-close-two");
-const backMyDialog = document.getElementById("back-to-one");
+const submitDialog = document.getElementById("submitDialog");
+const submitCloseButton = document.getElementById("submitCloseButton");
+const btnModalPrevious = document.getElementById("btn-modal-previous");
 
 // Bouton pour charger la 2ème page modale
 function changeModal() {
-  myDialog.close();
-  myDialogTwo.showModal();
+  galleryDialog.close();
+  submitDialog.showModal();
 }
 
 addPhotoButton.addEventListener("click", function (e) {
@@ -119,11 +118,11 @@ addPhotoButton.addEventListener("click", function (e) {
 
 // Revient à la 1ère modale
 function changeModalTwo() {
-  myDialogTwo.close();
-  myDialog.showModal();
+  submitDialog.close();
+  galleryDialog.showModal();
 }
 
-backMyDialog.addEventListener("click", function (e) {
+btnModalPrevious.addEventListener("click", function (e) {
   e.preventDefault();
   changeModalTwo();
 });
@@ -134,18 +133,18 @@ function closeModal(dialog) {
 }
 
 // Ferme la fenêtre modale lorsqu'on clique sur le bouton de fermeture
-closeButton.addEventListener("click", function () {
-  closeModal(myDialog);
+galleryCloseButton.addEventListener("click", function () {
+  closeModal(dialogGallery);
 });
 
 // Ajoute la même fonctionnalité pour la 2ème modale
-closeButtonTwo.addEventListener("click", function () {
-  closeModal(myDialogTwo);
+submitCloseButton.addEventListener("click", function () {
+  closeModal(submitDialog);
 });
 
 // Ferme les fenêtres modale lorsqu'on clique en dehors de la fenêtre
 body.addEventListener("click", function (event) {
-  if (event.target === myDialog || event.target === myDialogTwo) {
+  if (event.target === galleryDialog || event.target === submitDialog) {
     closeModal(event.target);
   }
 });
@@ -157,9 +156,20 @@ const myForm = document.getElementById("myForm");
 myForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const formData = new FormData(myForm);
-  postWorks(formData);
-  console.log(e);
-  console.log(formData);
+
+  console.log(
+    formData.get("file"),
+    formData.get("title"),
+    formData.get("category")
+  );
+
+  postWorks(formData).then((response) => {
+    if (response.status === "success") {
+      console.log("Le formulaire a été envoyé avec succès !");
+    } else {
+      console.log("Erreur lors de l'envoi du formulaire :", response.message);
+    }
+  });
 });
 
 // Prévisualisation de l'image

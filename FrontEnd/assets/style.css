@@ -326,7 +326,7 @@ figure {
 }
 #contact form,
 #login form,
-#myDivTwo form {
+#submitDiv form {
   text-align: left;
   margin-top: 30px;
   display: flex;
@@ -335,7 +335,7 @@ figure {
 
 #contact input,
 #login input,
-#myDivTwo input {
+#submitDiv input {
   height: 50px;
   font-size: 1.2em;
   border: none;
@@ -349,7 +349,7 @@ figure {
 
 #contact textarea,
 #login textarea,
-#myDivTwo textarea {
+#submitDiv textarea {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -398,21 +398,21 @@ dialog {
   width: 630px;
 }
 
-#myDiv,
-#myDivTwo {
+#galleryDiv,
+#submitDiv {
   display: flex;
   flex-direction: column;
 }
 
-#myDiv h2,
-#myDivTwo h2 {
+#galleryDiv h2,
+#submitDiv h2 {
   font-family: "Work Sans";
   font-weight: 400;
   color: #000000;
 }
 
-#js-modal-close,
-#js-modal-close-two {
+#galleryCloseButton,
+#submitCloseButton {
   background-color: transparent;
   border: none;
   font-size: 18px;
@@ -452,7 +452,7 @@ dialog {
   font-size: 9px;
 }
 
-.buttons-gallery {
+.galleryFlexButtons {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -480,18 +480,18 @@ dialog {
 
 /* DEUXIEME MODALE */
 
-.modale-buttons {
+.submitFlexButtons {
   display: flex;
   justify-content: space-between;
 }
 
-#back-to-one {
+#btn-modal-previous {
   background-color: transparent;
   border: none;
   font-size: 18px;
 }
 
-#myDivTwo form {
+#submitDiv form {
   align-items: center;
 }
 
@@ -510,6 +510,8 @@ dialog {
   position: relative;
   width: 100%;
   height: 170px;
+  margin-bottom: 50px;
+  text-align: center;
 }
 
 #imgInp.my-file-input {
@@ -523,4 +525,10 @@ dialog {
 
 #blah {
   max-width: 200px;
+}
+
+input#title,
+input#category {
+  width: 100%;
+  margin-bottom: 50px;
 }
