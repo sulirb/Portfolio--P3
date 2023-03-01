@@ -13,23 +13,21 @@ function openModal() {
 }
 myButton.addEventListener("click", openModal);
 
+const categoriesSet = {};
 async function main() {
   const data = await fetchWorks();
   createWorks(data);
 
   // Utilisation des catégories sur le formulaire
-
-  const categoriesSet = new Set();
   for (const work of data) {
-    categoriesSet.add(work.category.name);
+    categoriesSet[work.category.name] = work.category.id;
   }
 
-  const categories = Array.from(categoriesSet);
-
   const datalistElement = document.getElementById("category-id");
-  for (const category of categories) {
+  for (const [name, id] of Object.entries(categoriesSet)) {
     const optionElement = document.createElement("option");
-    optionElement.setAttribute("value", category);
+    optionElement.setAttribute("value", id);
+    optionElement.innerText = name;
     datalistElement.appendChild(optionElement);
   }
 }
@@ -64,39 +62,51 @@ function createWorks(data) {
   }
 }
 
+function prevent(c) {
+  return function (e, ...args) {
+    e.preventDefault();
+    return c(e, ...args);
+  };
+}
+
 // Supprime un ID
 function addDeleteButton(worksElement) {
   const deleteButton = worksElement.appendChild(
     document.createElement("button")
   );
-
   const trashIcon = document.createElement("i");
   trashIcon.classList.add("fas", "fa-trash-can");
   deleteButton.appendChild(trashIcon);
+  deleteButton.type = "button";
 
   // Supression des éléments sur la modale
-  deleteButton.addEventListener("click", async function (e) {
-    // Utilise l'id d'un work pour le supprimer
-    const id = worksElement.getAttribute("data-id");
-    deleteWorks(id);
-    worksElement.remove(); // supprime l'élément du DOM (supprime avant de refresh)
-    e.stopPropagation();
-  });
+  deleteButton.addEventListener(
+    "click",
+    prevent(async function (e) {
+      // Utilise l'id d'un work pour le supprimer
+      const id = worksElement.getAttribute("data-id");
+      deleteWorks(id);
+      worksElement.remove(); // supprime l'élément du DOM (supprime avant de refresh)
+    })
+  );
 }
 
 // Supprime tous les ID
 function addDeleteAll() {
   const deleteAll = document.getElementById("delete-all");
-  deleteAll.addEventListener("click", async function (e) {
-    const worksElements = document.querySelectorAll("[data-id]");
-    // Boucle sur chaque data id pour pouvoir les supprimer d'un coup
-    for (let i = 0; i < worksElements.length; i++) {
-      const id = worksElements[i].getAttribute("data-id");
-      await deleteWorks(id);
-      worksElements[i].remove(); // supprime les éléments du DOM (supprime avant de refresh)
-      e.stopPropagation();
-    }
-  });
+  deleteAll.addEventListener(
+    "click",
+    prevent(async function (e) {
+      const worksElements = document.querySelectorAll("[data-id]");
+
+      // Boucle sur chaque data id pour pouvoir les supprimer d'un coup
+      for (let i = 0; i < worksElements.length; i++) {
+        const id = worksElements[i].getAttribute("data-id");
+        await deleteWorks(id);
+        worksElements[i].remove(); // supprime les éléments du DOM (supprime avant de refresh)
+      }
+    })
+  );
 }
 
 // Création de la 2ème page modale
@@ -134,7 +144,7 @@ function closeModal(dialog) {
 
 // Ferme la fenêtre modale lorsqu'on clique sur le bouton de fermeture
 galleryCloseButton.addEventListener("click", function () {
-  closeModal(dialogGallery);
+  closeModal(galleryDialog);
 });
 
 // Ajoute la même fonctionnalité pour la 2ème modale
@@ -158,16 +168,16 @@ myForm.addEventListener("submit", function (e) {
   const formData = new FormData(myForm);
 
   console.log(
-    formData.get("file"),
+    formData.get("image"),
     formData.get("title"),
     formData.get("category")
   );
 
-  postWorks(formData).then((response) => {
+  postWorks(formData).then(function (response) {
     if (response.status === "success") {
       console.log("Le formulaire a été envoyé avec succès !");
     } else {
-      console.log("Erreur lors de l'envoi du formulaire :", response.message);
+      console.log("Erreur lors de l'envoi du formulaire:", response.message);
     }
   });
 });
@@ -176,7 +186,7 @@ myForm.addEventListener("submit", function (e) {
 imgInp.onchange = (evt) => {
   const [file] = imgInp.files;
   if (file) {
-    blah.src = URL.createObjectURL(file);
+    photo.src = URL.createObjectURL(file);
     const photoIcon = document.querySelector(".fa-image");
     photoIcon.style.display = "none";
   }

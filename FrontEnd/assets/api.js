@@ -5,8 +5,8 @@ async function apiFetch(method, url, body, options = {}) {
   let token = check();
   const headers = { ...options.headers };
   if (token) headers.Authorization = `Bearer ${token}`;
-  if (body instanceof FormData) headers["Content-Type"] = "multipart/form-data";
-  else if (typeof body === "object")
+  if (body instanceof FormData) {
+  } else if (typeof body === "object")
     headers["Content-Type"] = "application/json";
 
   const response = await fetch(`${baseUrl}${url}`, { body, method, headers });
@@ -19,5 +19,4 @@ async function apiFetch(method, url, body, options = {}) {
 
 export const fetchWorks = () => apiFetch("GET", "/api/works");
 export const deleteWorks = (id) => apiFetch("DELETE", `/api/works/${id}`);
-export const postWorks = (formData) =>
-  apiFetch("POST", "/api/works", { body: formData });
+export const postWorks = (formData) => apiFetch("POST", "/api/works", formData);

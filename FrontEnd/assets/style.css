@@ -343,7 +343,8 @@ figure {
 }
 
 #contact label,
-#login label {
+#login label,
+#myForm label {
   margin: 2em 0 1em 0;
 }
 
@@ -491,10 +492,6 @@ dialog {
   font-size: 18px;
 }
 
-#submitDiv form {
-  align-items: center;
-}
-
 #myForm {
   padding: 0 95px;
 }
@@ -510,8 +507,9 @@ dialog {
   position: relative;
   width: 100%;
   height: 170px;
-  margin-bottom: 50px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 #imgInp.my-file-input {
@@ -520,15 +518,14 @@ dialog {
   left: 0;
   opacity: 0;
   width: 100%;
-  height: 170px;
+  min-height: 170px;
 }
 
-#blah {
+#photo {
   max-width: 200px;
 }
 
 input#title,
 input#category {
   width: 100%;
-  margin-bottom: 50px;
 }

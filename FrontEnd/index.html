@@ -108,19 +108,18 @@
                   <i class="fa fa-thin fa-image"></i>
                   <input
                     type="file"
-                    name="file"
+                    name="image"
                     id="imgInp"
                     class="my-file-input"
                     accept="image/png, image/jpeg"
                   />
-                  <img id="blah" src="#" alt="+ Ajouter image" />
+                  <img id="photo" src="#" alt="+ Ajouter image" />
                 </label>
                 <label for="title">Titre</label>
                 <input type="text" name="title" id="title" />
-                <label for="category">Catégorie</label>
-                <input list="category-id" name="category" id="category" />
+                <label for="category-id">Catégorie</label>
 
-                <datalist id="category-id"> </datalist>
+                <select name="category" id="category-id"></select>
 
                 <input type="submit" value="Valider" />
               </form>
