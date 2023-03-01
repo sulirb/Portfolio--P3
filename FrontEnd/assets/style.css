@@ -335,7 +335,8 @@ figure {
 
 #contact input,
 #login input,
-#submitDiv input {
+#submitDiv input,
+select {
   height: 50px;
   font-size: 1.2em;
   border: none;
