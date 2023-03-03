@@ -440,11 +440,19 @@ dialog {
   border: none;
   background-color: #000000;
   position: fixed;
-  margin: -120px 0px 0px 60px;
   cursor: pointer;
   width: 17px;
   height: 17px;
   border-radius: 2px;
+}
+
+.delete-button {
+  margin: -120px 0px 0px 60px;
+}
+
+.move-button {
+  margin: -120px 0px 0px 40px;
+  display: none;
 }
 
 .modal-gallery i {

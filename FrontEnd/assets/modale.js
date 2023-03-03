@@ -54,6 +54,24 @@ function createWorks(data) {
     const titleElement = worksElement.appendChild(document.createElement("p"));
     titleElement.innerText = "éditer";
 
+    const moveButton = worksElement.appendChild(
+      document.createElement("button")
+    );
+    moveButton.classList.add("move-button");
+    const moveIcon = document.createElement("i");
+    moveIcon.classList.add("fas", "fa-arrows-up-down-left-right");
+    moveButton.appendChild(moveIcon);
+
+    // Ajouter l'événement "mouseover"
+    worksElement.addEventListener("mouseover", function () {
+      moveButton.style.display = "inline-block"; // Afficher le bouton de déplacement
+    });
+
+    // Ajouter l'événement "mouseout"
+    worksElement.addEventListener("mouseout", function () {
+      moveButton.style.display = "none"; // Masquer le bouton de déplacement
+    });
+
     // Extrait l'id de chaque work
     worksElement.setAttribute("data-id", article.id);
 
@@ -74,10 +92,10 @@ function addDeleteButton(worksElement) {
   const deleteButton = worksElement.appendChild(
     document.createElement("button")
   );
+  deleteButton.classList.add("delete-button");
   const trashIcon = document.createElement("i");
   trashIcon.classList.add("fas", "fa-trash-can");
   deleteButton.appendChild(trashIcon);
-  deleteButton.type = "button";
 
   // Supression des éléments sur la modale
   deleteButton.addEventListener(
@@ -166,20 +184,7 @@ const myForm = document.getElementById("myForm");
 myForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const formData = new FormData(myForm);
-
-  console.log(
-    formData.get("image"),
-    formData.get("title"),
-    formData.get("category")
-  );
-
-  postWorks(formData).then(function (response) {
-    if (response.status === "success") {
-      console.log("Le formulaire a été envoyé avec succès !");
-    } else {
-      console.log("Erreur lors de l'envoi du formulaire:", response.message);
-    }
-  });
+  postWorks(formData);
 });
 
 // Prévisualisation de l'image
