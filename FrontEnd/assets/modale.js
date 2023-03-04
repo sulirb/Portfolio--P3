@@ -101,6 +101,7 @@ function addDeleteButton(worksElement) {
   deleteButton.addEventListener(
     "click",
     prevent(async function (e) {
+      e.stopPropagation();
       // Utilise l'id d'un work pour le supprimer
       const id = worksElement.getAttribute("data-id");
       deleteWorks(id);
@@ -115,6 +116,7 @@ function addDeleteAll() {
   deleteAll.addEventListener(
     "click",
     prevent(async function (e) {
+      e.stopPropagation();
       const worksElements = document.querySelectorAll("[data-id]");
 
       // Boucle sur chaque data id pour pouvoir les supprimer d'un coup
@@ -182,6 +184,7 @@ body.addEventListener("click", function (event) {
 const myForm = document.getElementById("myForm");
 
 myForm.addEventListener("submit", function (e) {
+  e.stopPropagation();
   e.preventDefault();
   const formData = new FormData(myForm);
   postWorks(formData);
@@ -194,5 +197,7 @@ imgInp.onchange = (evt) => {
     photo.src = URL.createObjectURL(file);
     const photoIcon = document.querySelector(".fa-image");
     photoIcon.style.display = "none";
+    document.querySelector('input[type="submit"]').style.backgroundColor =
+      "#1d6154";
   }
 };
