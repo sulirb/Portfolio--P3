@@ -335,8 +335,7 @@ figure {
 
 #contact input,
 #login input,
-#myForm input,
-select {
+#myForm input {
   height: 50px;
   font-size: 1.2em;
   border: none;
@@ -411,6 +410,7 @@ dialog {
   font-family: "Work Sans";
   font-weight: 400;
   color: #000000;
+  margin: 1em 1em 0;
 }
 
 #galleryCloseButton,
@@ -424,11 +424,13 @@ dialog {
 /* PREMIERE MODALE */
 
 .modal-gallery {
+  padding: 30px 0;
+  margin: 0 95px 25px;
+  border-bottom: 1px solid #b3b3b3;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 8px;
-  padding: 0 95px;
 }
 
 .modal-gallery img {
@@ -490,6 +492,9 @@ dialog {
 
 /* DEUXIEME MODALE */
 
+#submitDiv form {
+  margin: 0;
+}
 .submitFlexButtons {
   display: flex;
   justify-content: space-between;
@@ -505,22 +510,37 @@ dialog {
   padding: 0 95px;
 }
 
-#myForm .fa {
-  background-color: #e8f1f6;
-  color: #b9c5cc;
-  font-size: 50px;
-}
-
 #image-label {
   background-color: #e8f1f6;
   position: relative;
   width: 100%;
   height: 170px;
-  text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
+#myForm .fa {
+  background-color: #e8f1f6;
+  color: #b9c5cc;
+  font-size: 50px;
+  margin-top: 25px;
+}
+
+#add-image-button {
+  margin: 15px 0 5px 0;
+  padding: 0.6em 2em;
+  border: none;
+  border-radius: 30px;
+  color: #306685;
+  background-color: #cbd6dc;
+  font-family: "Work Sans";
+}
+
+#infoText {
+  color: #444444;
+  font-size: 11px;
+}
 #imgInp.my-file-input {
   position: absolute;
   top: 0;
@@ -528,17 +548,32 @@ dialog {
   opacity: 0;
   width: 100%;
   min-height: 170px;
+  display: none;
 }
 
 #photo {
-  max-width: 200px;
+  max-width: 300px;
+  max-height: 170px;
+  text-align: center;
+}
+
+select {
+  margin-bottom: 35px;
+  height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.borderButton {
+  border-top: 1px solid #b3b3b3;
+}
+
+#myForm input[type="submit"] {
+  background-color: #a7a7a7;
 }
 
 input#title,
 input#category {
   width: 100%;
-}
-
-#myForm input[type="submit"] {
-  background-color: gray;
 }

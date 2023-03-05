@@ -106,6 +106,9 @@
               <form method="dialog" id="myForm">
                 <label for="image" id="image-label">
                   <i class="fa fa-thin fa-image"></i>
+                  <button type="button" id="add-image-button">
+                    + Ajouter photo
+                  </button>
                   <input
                     type="file"
                     name="image"
@@ -114,8 +117,10 @@
                     accept="image/png, image/jpeg"
                     required
                   />
-                  <img id="photo" src="#" alt="+ Ajouter image" />
+                  <img id="photo" />
+                  <div id="infoText">jpg, png : 4mo max</div>
                 </label>
+
                 <label for="title">Titre</label>
                 <input type="text" name="title" id="title" required />
                 <label for="category-id">Catégorie</label>
@@ -123,7 +128,7 @@
                 <select name="category" id="category-id" required>
                   <option hidden disabled selected value></option>
                 </select>
-
+                <div class="borderButton"></div>
                 <input type="submit" value="Valider" />
               </form>
             </div>

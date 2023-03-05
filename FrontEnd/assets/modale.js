@@ -190,6 +190,15 @@ myForm.addEventListener("submit", function (e) {
   postWorks(formData);
 });
 
+// Rajout bouton pour ajouter une image
+
+const addImageButton = document.getElementById("add-image-button");
+
+// Ajout d'un événement "click" au bouton
+addImageButton.addEventListener("click", () => {
+  imgInp.click();
+});
+
 // Prévisualisation de l'image
 imgInp.onchange = (evt) => {
   const [file] = imgInp.files;
@@ -197,6 +206,8 @@ imgInp.onchange = (evt) => {
     photo.src = URL.createObjectURL(file);
     const photoIcon = document.querySelector(".fa-image");
     photoIcon.style.display = "none";
+    addImageButton.style.display = "none";
+    document.getElementById("infoText").style.display = "none";
     document.querySelector('input[type="submit"]').style.backgroundColor =
       "#1d6154";
   }
