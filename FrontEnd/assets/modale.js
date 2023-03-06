@@ -80,13 +80,6 @@ function createWorks(data) {
   }
 }
 
-function prevent(c) {
-  return function (e, ...args) {
-    e.preventDefault();
-    return c(e, ...args);
-  };
-}
-
 // Supprime un ID
 function addDeleteButton(worksElement) {
   const deleteButton = worksElement.appendChild(
@@ -98,35 +91,33 @@ function addDeleteButton(worksElement) {
   deleteButton.appendChild(trashIcon);
 
   // Supression des éléments sur la modale
-  deleteButton.addEventListener(
-    "click",
-    prevent(async function (e) {
-      e.stopPropagation();
-      // Utilise l'id d'un work pour le supprimer
-      const id = worksElement.getAttribute("data-id");
-      deleteWorks(id);
-      worksElement.remove(); // supprime l'élément du DOM (supprime avant de refresh)
-    })
-  );
+  deleteButton.addEventListener("click", async function (e) {
+    // Utilise l'id d'un work pour le supprimer
+    e.preventDefault();
+    const id = worksElement.getAttribute("data-id");
+    deleteWorks(id);
+    worksElement.remove(); // supprime l'élément du DOM (supprime avant de refresh)
+
+    const worksElementOnMainPage = document.querySelector(`[data-id="${id}"]`);
+    if (worksElementOnMainPage) {
+      worksElementOnMainPage.remove();
+    }
+  });
 }
 
 // Supprime tous les ID
 function addDeleteAll() {
   const deleteAll = document.getElementById("delete-all");
-  deleteAll.addEventListener(
-    "click",
-    prevent(async function (e) {
-      e.stopPropagation();
-      const worksElements = document.querySelectorAll("[data-id]");
-
-      // Boucle sur chaque data id pour pouvoir les supprimer d'un coup
-      for (let i = 0; i < worksElements.length; i++) {
-        const id = worksElements[i].getAttribute("data-id");
-        await deleteWorks(id);
-        worksElements[i].remove(); // supprime les éléments du DOM (supprime avant de refresh)
-      }
-    })
-  );
+  deleteAll.addEventListener("click", async function (e) {
+    const worksElements = document.querySelectorAll("[data-id]");
+    // Boucle sur chaque data id pour pouvoir les supprimer d'un coup
+    for (let i = 0; i < worksElements.length; i++) {
+      e.preventDefault();
+      const id = worksElements[i].getAttribute("data-id");
+      await deleteWorks(id);
+      worksElements[i].remove(); // supprime les éléments du DOM (supprime avant de refresh)
+    }
+  });
 }
 
 // Création de la 2ème page modale
@@ -184,8 +175,6 @@ body.addEventListener("click", function (event) {
 const myForm = document.getElementById("myForm");
 
 myForm.addEventListener("submit", function (e) {
-  e.stopPropagation();
-  e.preventDefault();
   const formData = new FormData(myForm);
   postWorks(formData);
 });

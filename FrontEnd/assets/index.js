@@ -20,6 +20,8 @@ function createWorks(data) {
 
     const titleElement = worksElement.appendChild(document.createElement("p"));
     titleElement.innerText = article.title;
+
+    const id = worksElement.getAttribute("data-id");
   }
 }
 
