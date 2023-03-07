@@ -433,6 +433,14 @@ dialog {
   gap: 8px;
 }
 
+.move-button {
+  display: none;
+}
+
+.modal-gallery article:hover .move-button {
+  display: inline-block;
+}
+
 .modal-gallery img {
   width: 80px;
   height: 110px;

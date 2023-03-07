@@ -1,10 +1,49 @@
-import { fetchWorks, deleteWorks, postWorks } from "./api.js";
+import { fetchWorks, deleteWorks as apiDeleteWorks, postWorks } from "./api.js";
+import {
+  cleanWorks,
+  getCache,
+  setCache,
+  updateWorksOnFilter,
+} from "./gallery.js";
 // Création de la logique d'ouverture de la modale
 
 const galleryDialog = document.getElementById("galleryDialog");
 const myButton = document.getElementById("myButton");
-const galleryCloseButton = document.getElementById("galleryCloseButton");
+const galleryCloseBtn = document.getElementById("galleryCloseButton");
 const body = document.body;
+const modaleGallery = document.querySelector(".modal-gallery");
+const deleteAll = document.getElementById("delete-all");
+const myForm = document.getElementById("myForm");
+const addImageButton = document.getElementById("add-image-button");
+const addPhotoButton = document.getElementById("add-photo");
+const submitDialog = document.getElementById("submitDialog");
+const submitCloseBtn = document.getElementById("submitCloseButton");
+const btnModalPrevious = document.getElementById("btn-modal-previous");
+
+// Supprime tous les ID
+async function deleteAllWorks(e) {
+  const worksElements = document.querySelectorAll("[data-id]");
+  // Boucle sur chaque data id pour pouvoir les supprimer d'un coup
+  for (let i = 0; i < worksElements.length; i++) {
+    e.preventDefault();
+    const id = worksElements[i].getAttribute("data-id");
+    await apiDeleteWorks(id);
+    worksElements[i].remove();
+  }
+}
+
+// Supprime un ID
+async function deleteWork(e) {
+  // Utilise l'id d'un work pour le supprimer
+  console.log(e);
+  e.preventDefault();
+  const id = e.target.dataset.id;
+  await apiDeleteWorks(id);
+  let cache = getCache();
+  cache = cache.filter((work) => work.id != id);
+  setCache(cache);
+  updateGalleries();
+}
 
 // Ouvre la fenêtre modale lorsqu'on clique sur le bouton
 function openModal() {
@@ -31,102 +70,71 @@ async function main() {
   }
 }
 
-main();
-
 // Création des éléments dans la modale
 
-const modaleGallery = document.querySelector(".modal-gallery");
+function updateGalleries() {
+  updateWorksOnFilter();
+  cleanModal();
+  createWorks();
+}
 
-function createWorks(data) {
+function cleanModal() {
+  modaleGallery.textContent = "";
+}
+
+function createWorks() {
+  const data = getCache();
   for (const article of data) {
     // Création des works
-    const worksElement = modaleGallery.appendChild(
+    const worksElmt = modaleGallery.appendChild(
       document.createElement("article")
     );
+    // Extrait l'id de chaque work
+    worksElmt.dataset.id = article.id;
 
-    const imageElement = worksElement.appendChild(
-      document.createElement("img")
-    );
+    const imageElement = worksElmt.appendChild(document.createElement("img"));
     imageElement.src = article.imageUrl;
-    imageElement.setAttribute("crossorigin", "anonymous");
+    imageElement.crossOrigin = "anonymous";
 
-    const titleElement = worksElement.appendChild(document.createElement("p"));
+    const titleElement = worksElmt.appendChild(document.createElement("p"));
     titleElement.innerText = "éditer";
 
-    const moveButton = worksElement.appendChild(
-      document.createElement("button")
-    );
-    moveButton.classList.add("move-button");
-    const moveIcon = document.createElement("i");
-    moveIcon.classList.add("fas", "fa-arrows-up-down-left-right");
-    moveButton.appendChild(moveIcon);
+    const moveBtn = worksElmt.appendChild(document.createElement("button"));
+    moveBtn.classList.add("move-button");
 
-    // Ajouter l'événement "mouseover"
-    worksElement.addEventListener("mouseover", function () {
-      moveButton.style.display = "inline-block"; // Afficher le bouton de déplacement
-    });
+    const moveIcn = moveBtn.appendChild(document.createElement("i"));
+    moveIcn.classList.add("fas", "fa-arrows-up-down-left-right");
 
-    // Ajouter l'événement "mouseout"
-    worksElement.addEventListener("mouseout", function () {
-      moveButton.style.display = "none"; // Masquer le bouton de déplacement
-    });
+    const deleteBtn = worksElmt.appendChild(document.createElement("button"));
+    deleteBtn.classList.add("delete-button");
 
-    // Extrait l'id de chaque work
-    worksElement.setAttribute("data-id", article.id);
+    const trashIcn = document.createElement("i");
+    trashIcn.classList.add("fas", "fa-trash-can");
+    deleteBtn.appendChild(trashIcn);
+    deleteBtn.dataset.id = article.id;
 
-    addDeleteButton(worksElement);
-    addDeleteAll();
+    // Supression des éléments sur la modale
+    deleteBtn.addEventListener("click", deleteWork);
   }
 }
 
-// Supprime un ID
-function addDeleteButton(worksElement) {
-  const deleteButton = worksElement.appendChild(
-    document.createElement("button")
-  );
-  deleteButton.classList.add("delete-button");
-  const trashIcon = document.createElement("i");
-  trashIcon.classList.add("fas", "fa-trash-can");
-  deleteButton.appendChild(trashIcon);
-
-  // Supression des éléments sur la modale
-  deleteButton.addEventListener("click", async function (e) {
-    // Utilise l'id d'un work pour le supprimer
-    e.preventDefault();
-    const id = worksElement.getAttribute("data-id");
-    deleteWorks(id);
-    worksElement.remove(); // supprime l'élément du DOM (supprime avant de refresh)
-  });
-}
-
 // Supprime tous les ID
-function addDeleteAll() {
-  const deleteAll = document.getElementById("delete-all");
-  deleteAll.addEventListener("click", async function (e) {
-    const worksElements = document.querySelectorAll("[data-id]");
-    // Boucle sur chaque data id pour pouvoir les supprimer d'un coup
-    for (let i = 0; i < worksElements.length; i++) {
-      e.preventDefault();
-      const id = worksElements[i].getAttribute("data-id");
-      await deleteWorks(id);
-      worksElements[i].remove(); // supprime les éléments du DOM (supprime avant de refresh)
-    }
-  });
-}
+
+deleteAll.addEventListener("click", deleteAllWorks);
 
 // Envoi d’un nouveau projet au back-end via le formulaire de la modale
 
-const myForm = document.getElementById("myForm");
-
-myForm.addEventListener("submit", function (e) {
+myForm.addEventListener("submit", async function (e) {
   const formData = new FormData(myForm);
-  postWorks(formData);
+  const work = await postWorks(formData);
+  let cache = getCache();
+  cache.push(work);
+  setCache(cache);
+  updateGalleries();
+  openModal();
 });
 
 // Rajout bouton pour ajouter une image
-
-const addImageButton = document.getElementById("add-image-button");
-
 // Ajout d'un événement "click" au bouton
 addImageButton.addEventListener("click", () => {
   imgInp.click();
@@ -146,48 +154,33 @@ imgInp.onchange = (evt) => {
   }
 };
 
-// Création de la 2ème page modale
-const addPhotoButton = document.getElementById("add-photo");
-const submitDialog = document.getElementById("submitDialog");
-const submitCloseButton = document.getElementById("submitCloseButton");
-const btnModalPrevious = document.getElementById("btn-modal-previous");
+addPhotoButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  changeToModaleSubmit();
+});
 
 // Bouton pour charger la 2ème page modale
-function changeModal() {
+function changeToModaleSubmit() {
   galleryDialog.close();
   submitDialog.showModal();
 }
-
-addPhotoButton.addEventListener("click", function (e) {
-  e.preventDefault();
-  changeModal();
-});
-
 // Revient à la 1ère modale
-function changeModalTwo() {
+function changeToModaleGallery() {
   submitDialog.close();
   galleryDialog.showModal();
 }
-
-btnModalPrevious.addEventListener("click", function (e) {
-  e.preventDefault();
-  changeModalTwo();
-});
-
 // Fonction générale pour fermer la modale
 function closeModal(dialog) {
   return dialog.close();
 }
 
-// Ferme la fenêtre modale lorsqu'on clique sur le bouton de fermeture
-galleryCloseButton.addEventListener("click", function () {
-  closeModal(galleryDialog);
+btnModalPrevious.addEventListener("click", function (e) {
+  e.preventDefault();
+  changeToModaleGallery();
 });
 
-// Ajoute la même fonctionnalité pour la 2ème modale
-submitCloseButton.addEventListener("click", function () {
-  closeModal(submitDialog);
-});
+galleryCloseBtn.addEventListener("click", () => closeModal(galleryDialog));
+submitCloseBtn.addEventListener("click", () => closeModal(submitDialog));
 
 // Ferme les fenêtres modale lorsqu'on clique en dehors de la fenêtre
 body.addEventListener("click", function (event) {
@@ -195,3 +188,5 @@ body.addEventListener("click", function (event) {
     closeModal(event.target);
   }
 });
+
+main();

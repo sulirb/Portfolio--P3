@@ -1,32 +1,11 @@
 import { fetchWorks } from "./api.js";
 import { check, logout as logoutFromAuth } from "./auth.js";
+import { createWorks, setCache, updateWorksOnFilter } from "./gallery.js";
 
 //Appel de l'API
 
-const sectionGallery = document.querySelector(".gallery");
-
-//Création des éléments dans la galerie
-function createWorks(data) {
-  for (const article of data) {
-    const worksElement = sectionGallery.appendChild(
-      document.createElement("article")
-    );
-
-    const imageElement = worksElement.appendChild(
-      document.createElement("img")
-    );
-    imageElement.src = article.imageUrl;
-    imageElement.setAttribute("crossorigin", "anonymous");
-
-    const titleElement = worksElement.appendChild(document.createElement("p"));
-    titleElement.innerText = article.title;
-
-    const id = worksElement.getAttribute("data-id");
-  }
-}
-
 //Obtention des catégories de filtres à partir des données
-export const getFilterCategories = function (works) {
+export function getFilterCategories(works) {
   const categories = new Set();
   for (const work of works) {
     const category = work.category;
@@ -34,13 +13,14 @@ export const getFilterCategories = function (works) {
   }
 
   return categories;
-};
+}
 
 let data;
 
 async function main() {
   data = await fetchWorks();
-  createWorks(data);
+  setCache(data);
+  updateWorksOnFilter();
 
   // Récuperation des catégories présentes dans l'api
   const filters = document.querySelector(".filters");
@@ -64,18 +44,7 @@ async function main() {
   }
 
   // Ecouteur d'événement pour les filtres
-  filters.addEventListener("click", function (event) {
-    if (event.target.classList.contains("btn-filter")) {
-      const category = event.target.dataset.category;
-
-      const filteredWorks = data.filter(function (work) {
-        return work.category.name === category;
-      });
-
-      sectionGallery.innerHTML = "";
-      createWorks(filteredWorks);
-    }
-  });
+  filters.addEventListener("click", updateWorksOnFilter);
 
   // Bouton qui s'active au clique sur le filtre
   const filterButtons = filters.querySelectorAll(".btn-filter, .btn-tous");
