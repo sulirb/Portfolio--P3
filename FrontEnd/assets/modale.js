@@ -1,5 +1,4 @@
 import { fetchWorks, deleteWorks, postWorks } from "./api.js";
-
 // Création de la logique d'ouverture de la modale
 
 const galleryDialog = document.getElementById("galleryDialog");
@@ -97,11 +96,6 @@ function addDeleteButton(worksElement) {
     const id = worksElement.getAttribute("data-id");
     deleteWorks(id);
     worksElement.remove(); // supprime l'élément du DOM (supprime avant de refresh)
-
-    const worksElementOnMainPage = document.querySelector(`[data-id="${id}"]`);
-    if (worksElementOnMainPage) {
-      worksElementOnMainPage.remove();
-    }
   });
 }
 
@@ -119,6 +113,38 @@ function addDeleteAll() {
     }
   });
 }
+
+// Envoi d’un nouveau projet au back-end via le formulaire de la modale
+
+const myForm = document.getElementById("myForm");
+
+myForm.addEventListener("submit", function (e) {
+  const formData = new FormData(myForm);
+  postWorks(formData);
+});
+
+// Rajout bouton pour ajouter une image
+
+const addImageButton = document.getElementById("add-image-button");
+
+// Ajout d'un événement "click" au bouton
+addImageButton.addEventListener("click", () => {
+  imgInp.click();
+});
+
+// Prévisualisation de l'image
+imgInp.onchange = (evt) => {
+  const [file] = imgInp.files;
+  if (file) {
+    photo.src = URL.createObjectURL(file);
+    const photoIcon = document.querySelector(".fa-image");
+    photoIcon.style.display = "none";
+    addImageButton.style.display = "none";
+    document.getElementById("infoText").style.display = "none";
+    document.querySelector('input[type="submit"]').style.backgroundColor =
+      "#1d6154";
+  }
+};
 
 // Création de la 2ème page modale
 const addPhotoButton = document.getElementById("add-photo");
@@ -169,35 +195,3 @@ body.addEventListener("click", function (event) {
     closeModal(event.target);
   }
 });
-
-// Envoi d’un nouveau projet au back-end via le formulaire de la modale
-
-const myForm = document.getElementById("myForm");
-
-myForm.addEventListener("submit", function (e) {
-  const formData = new FormData(myForm);
-  postWorks(formData);
-});
-
-// Rajout bouton pour ajouter une image
-
-const addImageButton = document.getElementById("add-image-button");
-
-// Ajout d'un événement "click" au bouton
-addImageButton.addEventListener("click", () => {
-  imgInp.click();
-});
-
-// Prévisualisation de l'image
-imgInp.onchange = (evt) => {
-  const [file] = imgInp.files;
-  if (file) {
-    photo.src = URL.createObjectURL(file);
-    const photoIcon = document.querySelector(".fa-image");
-    photoIcon.style.display = "none";
-    addImageButton.style.display = "none";
-    document.getElementById("infoText").style.display = "none";
-    document.querySelector('input[type="submit"]').style.backgroundColor =
-      "#1d6154";
-  }
-};
