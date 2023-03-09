@@ -28,7 +28,10 @@ async function deleteAllWorks(e) {
     e.preventDefault();
     const id = worksElements[i].getAttribute("data-id");
     await apiDeleteWorks(id);
-    worksElements[i].remove();
+    let cache = getCache();
+    cache = cache.filter((work) => work.id != id);
+    setCache(cache);
+    updateGalleries();
   }
 }
 
