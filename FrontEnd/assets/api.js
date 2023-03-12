@@ -1,7 +1,5 @@
 import { check } from "./auth.js";
 
-/*const host = new URL(window.location.href).hostname;
-const baseUrl = `http://${host}:5678`;*/
 const baseUrl = `http://localhost:5678`;
 async function apiFetch(method, url, body, options = {}) {
   let token = check();

@@ -15,10 +15,16 @@ const modaleGallery = document.querySelector(".modal-gallery");
 const deleteAll = document.getElementById("delete-all");
 const myForm = document.getElementById("myForm");
 const addImageButton = document.getElementById("add-image-button");
-const addPhotoButton = document.getElementById("add-photo");
+const btnNextModale = document.getElementById("add-photo");
 const submitDialog = document.getElementById("submitDialog");
 const submitCloseBtn = document.getElementById("submitCloseButton");
 const btnModalPrevious = document.getElementById("btn-modal-previous");
+
+// Ouvre la fenêtre modale lorsqu'on clique sur le bouton
+function openModal() {
+  return galleryDialog.showModal();
+}
+myButton.addEventListener("click", openModal);
 
 // Supprime tous les ID
 async function deleteAllWorks(e) {
@@ -48,12 +54,6 @@ async function deleteWork(e) {
   updateGalleries();
 }
 
-// Ouvre la fenêtre modale lorsqu'on clique sur le bouton
-function openModal() {
-  return galleryDialog.showModal();
-}
-myButton.addEventListener("click", openModal);
-
 const categoriesSet = {};
 async function main() {
   const data = await fetchWorks();
@@ -73,8 +73,7 @@ async function main() {
   }
 }
 
-// Création des éléments dans la modale
-
+// Permet de mettre à jour la galerie avec les filtres et les éléments
 function updateGalleries() {
   updateWorksOnFilter();
   cleanModal();
@@ -85,6 +84,7 @@ function cleanModal() {
   modaleGallery.textContent = "";
 }
 
+// Création des éléments dans la modale
 function createWorks() {
   const data = getCache();
   for (const article of data) {
@@ -121,8 +121,7 @@ function createWorks() {
   }
 }
 
-// Supprime tous les ID
-
+// Supprime tous les éléments
 deleteAll.addEventListener("click", deleteAllWorks);
 
 // Envoi d’un nouveau projet au back-end via le formulaire de la modale
@@ -137,7 +136,6 @@ myForm.addEventListener("submit", async function (e) {
   openModal();
 });
 
-// Rajout bouton pour ajouter une image
 // Ajout d'un événement "click" au bouton
 addImageButton.addEventListener("click", () => {
   imgInp.click();
@@ -157,17 +155,12 @@ imgInp.onchange = (evt) => {
   }
 };
 
-addPhotoButton.addEventListener("click", function (e) {
-  e.preventDefault();
-  changeToModaleSubmit();
-});
-
 // Bouton pour charger la 2ème page modale
 function changeToModaleSubmit() {
   galleryDialog.close();
   submitDialog.showModal();
 }
-// Revient à la 1ère modale
+// fonction pour Revenir à la 1ère modale
 function changeToModaleGallery() {
   submitDialog.close();
   galleryDialog.showModal();
@@ -177,11 +170,8 @@ function closeModal(dialog) {
   return dialog.close();
 }
 
-btnModalPrevious.addEventListener("click", function (e) {
-  e.preventDefault();
-  changeToModaleGallery();
-});
-
+btnNextModale.addEventListener("click", () => changeToModaleSubmit());
+btnModalPrevious.addEventListener("click", () => changeToModaleGallery());
 galleryCloseBtn.addEventListener("click", () => closeModal(galleryDialog));
 submitCloseBtn.addEventListener("click", () => closeModal(submitDialog));
 

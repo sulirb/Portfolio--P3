@@ -2,19 +2,6 @@ import { fetchWorks } from "./api.js";
 import { check, logout as logoutFromAuth } from "./auth.js";
 import { createWorks, setCache, updateWorksOnFilter } from "./gallery.js";
 
-//Appel de l'API
-
-//Obtention des catégories de filtres à partir des données
-export function getFilterCategories(works) {
-  const categories = new Set();
-  for (const work of works) {
-    const category = work.category;
-    categories.add(category.name);
-  }
-
-  return categories;
-}
-
 let data;
 
 async function main() {
