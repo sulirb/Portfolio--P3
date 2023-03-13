@@ -31,12 +31,10 @@ async function main() {
     filterButton.innerText = category;
     filterButton.classList.add("btn-filter");
     filterButton.dataset.category = category;
-
+    // Ecouteur d'événement pour les filtres
+    filterButton.addEventListener("click", updateWorksOnFilter);
     filters.appendChild(filterButton);
   }
-
-  // Ecouteur d'événement pour les filtres
-  filters.addEventListener("click", updateWorksOnFilter);
 
   // Bouton qui s'active au clique sur le filtre
   const filterButtons = filters.querySelectorAll(".btn-filter, .btn-tous");
@@ -52,13 +50,7 @@ async function main() {
 
 // Reinitialisation
 document.querySelector(".btn-tous").addEventListener("click", function () {
-  const allWorks = data.filter((work) => {
-    return (
-      work.category.name === "objets", "appartements", "hotels & restaurants"
-    );
-  });
-  cleanWorks();
-  createWorks(allWorks);
+  updateWorksOnFilter();
 });
 
 // Changement d'état de la page si l'utilisateur est connecté
