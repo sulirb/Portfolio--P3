@@ -1,6 +1,11 @@
 import { fetchWorks } from "./api.js";
 import { check, logout as logoutFromAuth } from "./auth.js";
-import { createWorks, setCache, updateWorksOnFilter } from "./gallery.js";
+import {
+  cleanWorks,
+  createWorks,
+  setCache,
+  updateWorksOnFilter,
+} from "./gallery.js";
 
 let data;
 
@@ -22,8 +27,8 @@ async function main() {
   // Ajout des filtres sur le JS
   for (const category of categories) {
     const filterButton = document.createElement("button");
-    filterButton.innerText = category;
 
+    filterButton.innerText = category;
     filterButton.classList.add("btn-filter");
     filterButton.dataset.category = category;
 
@@ -45,17 +50,14 @@ async function main() {
   }
 }
 
-main();
-
 // Reinitialisation
-document.querySelector(".btn-tous").addEventListener("click", function (event) {
-  const allWorks = data.filter(function (work) {
+document.querySelector(".btn-tous").addEventListener("click", function () {
+  const allWorks = data.filter((work) => {
     return (
       work.category.name === "objets", "appartements", "hotels & restaurants"
     );
   });
-
-  document.querySelector(".gallery").innerHTML = "";
+  cleanWorks();
   createWorks(allWorks);
 });
 
@@ -72,13 +74,11 @@ function checkLoginStatus() {
     let body = document.querySelector("body");
     body.classList.add("is-admin");
     body.classList.remove("is-guest");
-  } else {
-    body.classList.add("is-guest");
-    body.classList.remove("is-admin");
   }
 }
 
-checkLoginStatus();
-
 // Écouteur d'événement "click" pour le bouton de connexion
 btnLogout.addEventListener("click", logoutFromAuth);
+
+main();
+checkLoginStatus();

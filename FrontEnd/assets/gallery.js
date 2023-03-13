@@ -1,6 +1,6 @@
 export const sectionGallery = document.querySelector(".gallery");
 
-function createWork(article) {
+export function createWork(article) {
   const worksElement = document.createElement("article");
 
   const imageElement = worksElement.appendChild(document.createElement("img"));
