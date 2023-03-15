@@ -46,25 +46,6 @@ body.addEventListener("click", function (event) {
   }
 });
 
-const categoriesSet = {};
-async function main() {
-  const data = await fetchWorks();
-  createWorks(data);
-
-  // Utilisation des catégories sur le formulaire
-  for (const work of data) {
-    categoriesSet[work.category.name] = work.category.id;
-  }
-
-  const datalistElement = document.getElementById("category-id");
-  for (const [name, id] of Object.entries(categoriesSet)) {
-    const optionElement = document.createElement("option");
-    optionElement.setAttribute("value", id);
-    optionElement.innerText = name;
-    datalistElement.appendChild(optionElement);
-  }
-}
-
 // Permet de mettre à jour la galerie avec les filtres et les éléments
 function updateGalleries() {
   updateWorksOnFilter();
@@ -116,12 +97,12 @@ function createWorks() {
 // Supprime un ID
 async function deleteWork(e) {
   // Utilise l'id d'un work pour le supprimer
-  console.log(e);
   e.preventDefault();
   const id = e.target.dataset.id;
   await apiDeleteWorks(id);
   let cache = getCache();
   cache = cache.filter((work) => work.id != id);
+  console.log(id);
   setCache(cache);
   updateGalleries();
 }
@@ -144,8 +125,26 @@ async function deleteAllWorks(e) {
 // Supprime tous les éléments
 deleteAll.addEventListener("click", deleteAllWorks);
 
-// Envoi d’un nouveau projet au back-end via le formulaire de la modale
+// Utilisation des catégories sur le formulaire
+const categoriesSet = {};
+async function main() {
+  const data = await fetchWorks();
+  createWorks(data);
 
+  for (const work of data) {
+    categoriesSet[work.category.name] = work.category.id;
+  }
+
+  const datalistElement = document.getElementById("category-id");
+  for (const [name, id] of Object.entries(categoriesSet)) {
+    const optionElement = document.createElement("option");
+    optionElement.setAttribute("value", id);
+    optionElement.innerText = name;
+    datalistElement.appendChild(optionElement);
+  }
+}
+
+// Envoi d’un nouveau projet au back-end via le formulaire de la modale
 myForm.addEventListener("submit", async function (e) {
   const formData = new FormData(myForm);
   const work = await postWorks(formData);
