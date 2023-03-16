@@ -10,7 +10,6 @@ export function createWork(article) {
   const titleElement = worksElement.appendChild(document.createElement("p"));
   titleElement.innerText = article.title;
 
-  const id = worksElement.getAttribute("data-id");
   return worksElement;
 }
 

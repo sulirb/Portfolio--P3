@@ -1,11 +1,6 @@
 import { fetchWorks } from "./api.js";
 import { check, logout as logoutFromAuth } from "./auth.js";
-import {
-  cleanWorks,
-  createWorks,
-  setCache,
-  updateWorksOnFilter,
-} from "./gallery.js";
+import { setCache, updateWorksOnFilter } from "./gallery.js";
 
 let data;
 
