@@ -98,7 +98,7 @@ function createWorks() {
 async function deleteWork(e) {
   // Utilise l'id d'un work pour le supprimer
   e.preventDefault();
-  const id = e.target.dataset.id;
+  const id = e.currentTarget.dataset.id;
   await apiDeleteWorks(id);
   let cache = getCache();
   cache = cache.filter((work) => work.id != id);
@@ -152,6 +152,8 @@ myForm.addEventListener("submit", async function (e) {
   cache.push(work);
   setCache(cache);
   updateGalleries();
+  document.getElementById("myForm").reset();
+  resetPreview();
   openModal();
 });
 
@@ -165,13 +167,27 @@ imgInp.onchange = () => {
   const [file] = imgInp.files;
   if (file) {
     photo.src = URL.createObjectURL(file);
-    const photoIcon = document.querySelector(".fa-image");
-    photoIcon.style.display = "none";
-    addImageButton.style.display = "none";
-    document.getElementById("infoText").style.display = "none";
-    document.querySelector('input[type="submit"]').style.backgroundColor =
-      "#1d6154";
+    preview();
   }
 };
+
+function preview() {
+  const photoIcon = document.querySelector(".fa-image");
+  photoIcon.style.display = "none";
+  addImageButton.style.display = "none";
+  document.getElementById("infoText").style.display = "none";
+  document.querySelector('input[type="submit"]').style.backgroundColor =
+    "#1d6154";
+}
+
+function resetPreview() {
+  photo.src = "";
+  const photoIcon = document.querySelector(".fa-image");
+  photoIcon.style.display = "block";
+  addImageButton.style.display = "block";
+  document.getElementById("infoText").style.display = "block";
+  document.querySelector('input[type="submit"]').style.backgroundColor =
+    "#a7a7a7";
+}
 
 main();
